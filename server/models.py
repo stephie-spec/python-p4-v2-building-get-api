@@ -17,6 +17,8 @@ db = SQLAlchemy(metadata=metadata)
 class Game(db.Model):
     __tablename__ = "games"
 
+    serialize_rules = ("-reviews.game",)
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, unique=True)
     genre = db.Column(db.String)
@@ -33,6 +35,8 @@ class Game(db.Model):
 
 class Review(db.Model):
     __tablename__ = "reviews"
+
+    serialize_rules = ("-game.reviews", "-user.reviews",)
 
     id = db.Column(db.Integer, primary_key=True)
     score = db.Column(db.Integer)
@@ -52,6 +56,8 @@ class Review(db.Model):
 
 class User(db.Model):
     __tablename__ = "users"
+
+    serialize_rules = ("-reviews.user",)
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
